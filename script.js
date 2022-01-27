@@ -16,7 +16,9 @@ const creationOfHeading = (element) => {
   const networth = element.networth;
 
   return (
-    '<h2 class="billionaire__heading">' +
+    '<h2 class="billionaire__heading" id="' +
+    name +
+    '">' +
     rank +
     ". " +
     name +
@@ -34,9 +36,12 @@ const creationOfData = (element) => {
   const selfMade = element.self_made;
   const source = element.source;
   const status = element.status;
+  const name = element.name;
 
   return (
-    "<ul><li>age: " +
+    '<ul id="' +
+    name +
+    '"><li>age: ' +
     age +
     "</li><li>children: " +
     children +
@@ -64,14 +69,54 @@ arrayOfBillionaires.forEach((element) => {
   rank++;
 });
 
-const lists = Array.from(document.querySelectorAll("li"));
+const lists = Array.from(document.querySelectorAll("ul"));
 
-// lists.forEach((element) => {
-//   if (element.className === "li_shown") {
-//     element.className = "";
-//   } else {
-//     element.className = "li_shown";
-//   }
-// });
+const headings = Array.from(document.querySelectorAll("h2"));
+
+// console.log(headings);
+
+headings.forEach((heading) => {
+  heading.addEventListener("mouseenter", () => {
+    heading.className += " hover";
+  });
+
+  heading.addEventListener("click", () => {
+    lists.forEach((list) => {
+      if (heading.getAttribute("id") === list.getAttribute("id")) {
+        if (list.className === "ul_shown") {
+          list.className = "";
+        } else {
+          list.className = "ul_shown";
+        }
+      }
+    });
+  });
+});
 
 // console.log(lists);
+
+const input = document.querySelector("input");
+
+input.addEventListener("keyup", () => {
+  arrayOfBillionaires.forEach((element) => {
+    if (element.name.toLowerCase().indexOf(input.value.toLowerCase()) !== -1) {
+      headings.forEach((heading) => {
+        if (heading.getAttribute("id") === element.name) {
+          heading.className = "heading-shown";
+        }
+      });
+    } else {
+      headings.forEach((heading) => {
+        if (heading.getAttribute("id") === element.name) {
+          heading.className = "";
+        }
+      });
+    }
+  });
+});
+
+if (input.value === "") {
+  headings.forEach((heading) => {
+    heading.className = "heading-shown";
+  });
+}

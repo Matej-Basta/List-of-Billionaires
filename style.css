@@ -1,11 +1,19 @@
 ul {
   list-style: none;
-}
-
-li {
   display: none;
 }
 
-.li_shown {
+.ul_shown {
+  display: block;
+}
+
+.hover {
+  cursor: pointer;
+}
+h2 {
+  display: none;
+}
+
+.heading-shown {
   display: block;
 }
