@@ -4,129 +4,204 @@ const data =
 //JSON object converted to array
 const arrayOfBillionaires = JSON.parse(data);
 
+console.log(arrayOfBillionaires);
+
+//creating a class
+class Billionaire {
+  constructor() {
+    this.name = null;
+    this.networth = null;
+    this.country = null;
+    this.source = null;
+    this.age = null;
+    this.citizenship = null;
+    this.status = null;
+    this.children = null;
+    this.selfMade = null;
+  }
+
+  setName(name) {
+    this.name = name;
+  }
+
+  setNetworth(networth) {
+    this.networth = networth;
+  }
+
+  setCountry(country) {
+    this.country = country;
+  }
+
+  setSource(source) {
+    this.source = source;
+  }
+
+  setAge(age) {
+    this.age = age;
+  }
+
+  setCitizenship(citizenship) {
+    this.citizenship = citizenship;
+  }
+
+  setStatus(status) {
+    this.status = status;
+  }
+
+  setChildren(children) {
+    this.children = children;
+  }
+
+  setSelfMade(selfMade) {
+    this.selfMade = selfMade;
+  }
+
+  render() {
+    const div = document.createElement("div");
+    div.innerHTML = `<h2 class="billionaire__heading" id="${this.name}">${this.name} - $${this.networth} B</h2><ul id="${this.name}"><li>age: ${this.age}</li><li>children: ${this.children}</li><li>citizenship: ${this.citizenship}</li><li>country: ${this.country}</li><li>selfmade: ${this.selfMade}</li><li>source: ${this.source}</li><li>status: ${this.status}</li></ul>`;
+
+    return div;
+  }
+}
+
 //accessing the only element created in HTML doc
 const outterDiv = document.querySelector(".list-of-billionaires");
+console.log(outterDiv);
 
-//variable used for a ranking number in headings
-let rank = 1;
-
-//function that creates heading
-const creationOfHeading = (element) => {
-  const name = element.name;
-  const networth = element.networth;
-
-  return (
-    '<h2 class="billionaire__heading" id="' +
-    name +
-    '">' +
-    rank +
-    ". " +
-    name +
-    " - $" +
-    networth +
-    "B</h2>"
-  );
-};
-
-//function that creates the list
-const creationOfData = (element) => {
-  const age = element.age;
-  const children = element.children;
-  const citizenship = element.cizitenship;
-  const country = element.country;
-  const selfMade = element.self_made;
-  const source = element.source;
-  const status = element.status;
-  const name = element.name;
-
-  return (
-    '<ul id="' +
-    name +
-    '"><li>age: ' +
-    age +
-    "</li><li>children: " +
-    children +
-    "</li><li>citizenship: " +
-    citizenship +
-    "</li><li>country: " +
-    country +
-    "</li><li>self made: " +
-    selfMade +
-    "</li><li>source: " +
-    source +
-    "</li><li>status: " +
-    status +
-    "</li></ul>"
-  );
-};
-
-//function that combines everything and creates the whole structure, + adding 1 to a ranking variable
 arrayOfBillionaires.forEach((element) => {
-  outterDiv.innerHTML +=
-    '<div class="billionaire">' +
-    creationOfHeading(element) +
-    creationOfData(element) +
-    "</div>";
-
-  rank++;
+  const newPerson = new Billionaire();
+  newPerson.setName(element.name);
+  newPerson.setNetworth(element.networth);
+  newPerson.setCountry(element.country);
+  newPerson.setSource(element.source);
+  newPerson.setAge(element.age);
+  newPerson.setCitizenship(element.citizenship);
+  newPerson.setStatus(element.status);
+  newPerson.setChildren(element.children);
+  newPerson.setSelfMade(element.self_made);
+  outterDiv.appendChild(newPerson.render());
 });
 
-//accessing all the lists
-const lists = Array.from(document.querySelectorAll("ul"));
+// //variable used for a ranking number in headings
+// let rank = 1;
 
-//accessing all the headings
-const headings = Array.from(document.querySelectorAll("h2"));
+// //function that creates heading
+// const creationOfHeading = (element) => {
+//   const name = element.name;
+//   const networth = element.networth;
 
-//creating event listeners for every heading --> 1.cursor effect 2.displaying the lists
-headings.forEach((heading) => {
-  heading.addEventListener("mouseenter", () => {
-    heading.className += " hover";
-  });
+//   return (
+//     '<h2 class="billionaire__heading" id="' +
+//     name +
+//     '">' +
+//     rank +
+//     ". " +
+//     name +
+//     " - $" +
+//     networth +
+//     "B</h2>"
+//   );
+// };
 
-  heading.addEventListener("click", () => {
-    lists.forEach((list) => {
-      //the list should be influenced only if its ID matches the ID of the clicked heading
-      if (heading.getAttribute("id") === list.getAttribute("id")) {
-        //if there is already displayed, the click should make it invisible, and vice versa
-        if (list.className === "ul_shown") {
-          list.className = "";
-        } else {
-          list.className = "ul_shown";
-        }
-      }
-    });
-  });
-});
+// //function that creates the list
+// const creationOfData = (element) => {
+//   const age = element.age;
+//   const children = element.children;
+//   const citizenship = element.cizitenship;
+//   const country = element.country;
+//   const selfMade = element.self_made;
+//   const source = element.source;
+//   const status = element.status;
+//   const name = element.name;
 
-//accessing the input element
-const input = document.querySelector("input");
+//   return (
+//     '<ul id="' +
+//     name +
+//     '"><li>age: ' +
+//     age +
+//     "</li><li>children: " +
+//     children +
+//     "</li><li>citizenship: " +
+//     citizenship +
+//     "</li><li>country: " +
+//     country +
+//     "</li><li>self made: " +
+//     selfMade +
+//     "</li><li>source: " +
+//     source +
+//     "</li><li>status: " +
+//     status +
+//     "</li></ul>"
+//   );
+// };
 
-//whenever the key is released, the filter will compare the input value with the name of the billionare and if there is a match, it will display him/her
-input.addEventListener("keyup", () => {
-  arrayOfBillionaires.forEach((element) => {
-    //every billionaire's name is compared with the input value
-    if (element.name.toLowerCase().indexOf(input.value.toLowerCase()) !== -1) {
-      //every heading is checked and if its ID corresponds with the name of the billionaire, its class name gets changed
-      headings.forEach((heading) => {
-        if (heading.getAttribute("id") === element.name) {
-          heading.className = "heading-shown";
-        }
-      });
-    }
-    //making sure, that the other headings lose their class name and dissappear
-    else {
-      headings.forEach((heading) => {
-        if (heading.getAttribute("id") === element.name) {
-          heading.className = "";
-        }
-      });
-    }
-  });
-});
+// //function that combines everything and creates the whole structure, + adding 1 to a ranking variable
+// arrayOfBillionaires.forEach((element) => {
+//   outterDiv.innerHTML +=
+//     '<div class="billionaire">' +
+//     creationOfHeading(element) +
+//     creationOfData(element) +
+//     "</div>";
 
-//if the input field is empty, all the headings should be visible
-if (input.value === "") {
-  headings.forEach((heading) => {
-    heading.className = "heading-shown";
-  });
-}
+//   rank++;
+// });
+
+// //accessing all the lists
+// const lists = Array.from(document.querySelectorAll("ul"));
+
+// //accessing all the headings
+// const headings = Array.from(document.querySelectorAll("h2"));
+
+// //creating event listeners for every heading --> 1.cursor effect 2.displaying the lists
+// headings.forEach((heading) => {
+//   heading.addEventListener("mouseenter", () => {
+//     heading.className += " hover";
+//   });
+
+//   heading.addEventListener("click", () => {
+//     lists.forEach((list) => {
+//       //the list should be influenced only if its ID matches the ID of the clicked heading
+//       if (heading.getAttribute("id") === list.getAttribute("id")) {
+//         //if there is already displayed, the click should make it invisible, and vice versa
+//         if (list.className === "ul_shown") {
+//           list.className = "";
+//         } else {
+//           list.className = "ul_shown";
+//         }
+//       }
+//     });
+//   });
+// });
+
+// //accessing the input element
+// const input = document.querySelector("input");
+
+// //whenever the key is released, the filter will compare the input value with the name of the billionare and if there is a match, it will display him/her
+// input.addEventListener("keyup", () => {
+//   arrayOfBillionaires.forEach((element) => {
+//     //every billionaire's name is compared with the input value
+//     if (element.name.toLowerCase().indexOf(input.value.toLowerCase()) !== -1) {
+//       //every heading is checked and if its ID corresponds with the name of the billionaire, its class name gets changed
+//       headings.forEach((heading) => {
+//         if (heading.getAttribute("id") === element.name) {
+//           heading.className = "heading-shown";
+//         }
+//       });
+//     }
+//     //making sure, that the other headings lose their class name and dissappear
+//     else {
+//       headings.forEach((heading) => {
+//         if (heading.getAttribute("id") === element.name) {
+//           heading.className = "";
+//         }
+//       });
+//     }
+//   });
+// });
+
+// //if the input field is empty, all the headings should be visible
+// if (input.value === "") {
+//   headings.forEach((heading) => {
+//     heading.className = "heading-shown";
+//   });
+// }
